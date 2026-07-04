@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+      Only present in the `benchmark` build type — never ships in release.
+      Lets Macrobenchmark attach to this process to read startup timing;
+      android:shell="true" restricts this to on-device shell-driven
+      benchmarking (adb/instrumentation), not arbitrary installed apps.
+    -->
+    <profileable
+        android:shell="true"
+        tools:targetApi="q" />
+
+</manifest>

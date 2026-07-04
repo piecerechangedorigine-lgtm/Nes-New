@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  XML mirror of the values in core:designsystem's NovaColors.kt. XML themes
+  and vector drawables can't reference Kotlin objects, so the handful of
+  tokens needed at the system-chrome level (window background, splash
+  screen) are duplicated here. If NovaColors.kt changes, update this file
+  to match — Compose UI itself never reads these.
+-->
+<resources>
+    <color name="nova_background">#0B0B10</color>
+    <color name="nova_surface">#16161C</color>
+    <color name="nova_elevated">#1F1F27</color>
+    <color name="nova_primary">#5B6CFF</color>
+</resources>

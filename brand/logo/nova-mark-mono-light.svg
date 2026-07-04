@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Nova mark — monochrome, light (white on transparent).
+
+  The full two-color overlapping mark collapses badly at small sizes and is
+  unusable for silhouette contexts (status bar, themed launcher icons,
+  single-color print). This is a single N — the base stroke of nova-mark.svg
+  with no mirrored pass — for exactly those contexts. Do not attempt to
+  render both N strokes in white; they become indistinguishable.
+-->
+<svg width="108" height="108" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M30,28 L30,80 L78,28 L78,80"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="14"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

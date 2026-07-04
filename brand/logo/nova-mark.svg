@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Nova logomark — "Overlapping N"
+
+  Construction: a single monoline N (down / diagonal / down) drawn twice —
+  once at full weight in Primary indigo, once mirrored horizontally, offset,
+  and layered at reduced opacity in mint. The mirrored pass reads as a second,
+  reversed N crossing the first, so the two strokes intersect through the
+  center rather than merely sitting side by side — that intersection is the
+  mark. No wallet, coin, or currency iconography; the geometry alone carries
+  the brand.
+
+  Grid: 108x108 (matches the Android adaptive-icon canvas 1:1, so this file
+  is the literal source for ic_launcher_foreground.xml — do not redraw there).
+  Safe zone: artwork stays inside the inner 30..78 / 28..80 box, well within
+  the 66dp adaptive-icon safe circle.
+-->
+<svg width="108" height="108" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- First N: base weight, full opacity, indigo -->
+    <path
+      d="M30,28 L30,80 L78,28 L78,80"
+      transform="translate(-4,-4)"
+      stroke="#5B6CFF"
+      stroke-width="14"
+    />
+    <!-- Second N: mirrored + offset, mint, layered on top at reduced opacity -->
+    <path
+      d="M30,28 L30,80 L78,28 L78,80"
+      transform="translate(108,0) scale(-1,1) translate(6,6)"
+      stroke="#9FE8D6"
+      stroke-width="14"
+      stroke-opacity="0.78"
+    />
+  </g>
+</svg>

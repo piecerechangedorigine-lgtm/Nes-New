@@ -1,0 +1,69 @@
+# Nova Detekt configuration.
+#
+# Starts from Detekt's own default ruleset (buildUponDefaultConfig = true
+# in the root build.gradle.kts) and only overrides rules that would
+# otherwise flag patterns this codebase uses deliberately and
+# consistently — documented inline per override so a future contributor
+# can tell "tuned on purpose" from "someone silenced a real problem."
+
+style:
+  MagicNumber:
+    active: false
+    # Every scoring engine in core:domain (DebtHealth, BalanceHealth,
+    # CreditCardIntelligence, PayoffPlan's simulation caps, etc.) is
+    # built from named, commented threshold constants inline
+    # (30/50/80 utilization bands, 3/6-month buffer targets, and so
+    # on) — that's the actual documentation for *why* each number is
+    # what it is. Extracting every one into a named constant would
+    # scatter that reasoning away from the number itself.
+
+  MaxLineLength:
+    maxLineLength: 180
+    # This codebase's doc comments are intentionally prose-dense
+    # (explaining *why*, not just *what*) rather than default's
+    # code-oriented 120.
+
+  ReturnCount:
+    active: false
+    # Several domain functions (calculateDebtHealth, generateBalanceSuggestions,
+    # simulateDebtScenario) use early returns/guard clauses for
+    # missing-data cases deliberately, matching this codebase's
+    # "degrade gracefully rather than nest deeply" convention.
+
+complexity:
+  LongMethod:
+    threshold: 100
+    # A handful of composed use cases (GetDreamDashboardDataUseCase,
+    # GetFinancialSourceIntelligenceUseCase) are long specifically
+    # because they combine many already-tested sources into one
+    # result — splitting the combine block itself would hide the
+    # data flow this project's docs explain in detail, not clarify it.
+
+  LongParameterList:
+    functionThreshold: 8
+    constructorThreshold: 8
+    # Several composed use cases (GetAssistantContextUseCase,
+    # GetFinancialSourceIntelligenceUseCase) legitimately depend on
+    # 6-7 other use cases — that's the actual dependency graph, not
+    # a design smell to hide behind a parameter object.
+
+  TooManyFunctions:
+    active: false
+    # Screen files intentionally group a route composable, its
+    # stateless screen, and several small private row/card composables
+    # in one file per this codebase's established Compose file
+    # organization — see ARCHITECTURE.md.
+
+naming:
+  FunctionNaming:
+    functionPattern: '[a-z][a-zA-Z0-9]*|`.+`'
+    # Backtick-quoted test function names are used project-wide per
+    # standard JUnit/Kotlin test-naming convention — Detekt's default
+    # pattern rejects them.
+
+potential-bugs:
+  UnsafeCallOnNullableType:
+    active: true
+    # Kept at default (active) deliberately, unlike the overrides
+    # above — a real potential crash source is worth flagging even in
+    # a codebase with many other deliberate style choices.

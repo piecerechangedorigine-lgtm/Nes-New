@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Minimal, honest placeholder for the widget picker's preview image —
+  a solid rounded rect in Nova's surface color, not a fabricated
+  screenshot of widget content that doesn't match what actually renders.
+  Replace with a real captured preview once the widgets have shipped on
+  a real device and an accurate screenshot exists.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#16161C" />
+    <corners android:radius="16dp" />
+</shape>

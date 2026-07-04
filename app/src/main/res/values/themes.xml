@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Nova is Compose-only and dark-first: no XML view hierarchy exists past
+  MainActivity's setContent{}, and there is no light variant in v1. These
+  themes exist purely to control system chrome that Compose can't reach
+  before first frame — window background (avoids a white flash pre-Compose),
+  status/nav bar treatment, and the launch splash screen.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Nova" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/nova_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+    </style>
+
+    <!--
+      Applied to MainActivity only, before installSplashScreen() hands off
+      to postSplashScreenTheme. The icon reused here is the adaptive-icon
+      foreground layer (ic_launcher_foreground) rather than a separate
+      splash asset, so the launcher icon and the launch screen always show
+      the same mark — one source of truth, no risk of the two drifting.
+    -->
+    <style name="Theme.Nova.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/nova_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/nova_background</item>
+        <item name="postSplashScreenTheme">@style/Theme.Nova</item>
+    </style>
+
+</resources>

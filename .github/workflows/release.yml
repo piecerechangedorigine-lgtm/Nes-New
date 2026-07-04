@@ -1,0 +1,94 @@
+name: Release
+
+# Triggered by the same version tags this project has used since
+# Phase 8 (v1.0.0-stable, v1.1.0-dream-dashboard, ... v1.3.5-foundation-complete)
+# — see RELEASE.md's own versioning section for the convention this
+# matches against.
+on:
+  push:
+    tags:
+      - "v*.*.*"
+      - "v*.*.*-*"
+
+jobs:
+  validate:
+    name: Validate before release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      # A release never skips the same gate a normal PR goes through —
+      # a tag pointing at code that wouldn't have passed CI is worse
+      # than no release at all.
+      - name: Compile (release)
+        run: ./gradlew assembleRelease --stacktrace
+
+      - name: Unit tests
+        run: ./gradlew testReleaseUnitTest --stacktrace
+
+      - name: Lint (release)
+        run: ./gradlew lintRelease --stacktrace
+
+      - name: Detekt
+        run: ./gradlew detekt --stacktrace
+
+  build-release:
+    name: Build release artifact
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      # Real signing (see RELEASE.md's "Signing" section) needs
+      # app/keystore.properties, which is gitignored and never
+      # committed by design — CI can't sign a build without the
+      # keystore secrets being provisioned separately (GitHub Actions
+      # secrets, not committed to the repo). Until that provisioning
+      # exists, this step produces an unsigned release build, which is
+      # still useful for internal verification even though it can't be
+      # published to the Play Store as-is.
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build unsigned release
+        run: ./gradlew assembleRelease --stacktrace
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nova-${{ github.ref_name }}-unsigned
+          path: app/build/outputs/apk/release/*.apk
+          retention-days: 90
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Nova ${{ github.ref_name }}
+          draft: true
+          generate_release_notes: true
+          files: app/build/outputs/apk/release/*.apk

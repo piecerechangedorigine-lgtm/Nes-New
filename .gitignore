@@ -1,0 +1,28 @@
+# Gradle
+.gradle/
+build/
+*/build/
+*/*/build/
+*/*/*/build/
+
+# Local configuration
+local.properties
+
+# Signing — never commit real keystores or credentials.
+# See app/keystore.properties.example for the expected format.
+*.jks
+*.keystore
+app/keystore.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+.DS_Store
+
+# Room schema history is generated output, not hand-authored source.
+core/data/schemas/
+
+# Baseline Profile output from :benchmark connected runs — reviewed and
+# copied into app/src/main/baseline-prof.txt manually, not auto-committed.
+benchmark/build/
+*.perfetto-trace

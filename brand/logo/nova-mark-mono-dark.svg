@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Nova mark — monochrome, dark (near-black on transparent).
+  For the rare light-background context (press kits, printed materials).
+  The app itself is dark-only; this file exists for external use, not
+  for anything in the Android module.
+-->
+<svg width="108" height="108" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M30,28 L30,80 L78,28 L78,80"
+    fill="none"
+    stroke="#0B0B10"
+    stroke-width="14"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
